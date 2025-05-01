@@ -25,7 +25,7 @@ $(document).ready(function () {
       clickable: true,
       renderBullet: function (index, className) {
         if (index > 0) {
-          return '<span class="' + className + '">' + "List View" + "</span>";         
+          return '<span class="' + className + '">' + "List View" + "</span>";
         } else {
           return '<span class="' + className + '">' + "Calendar View" + "</span>";
         }
@@ -37,14 +37,14 @@ $(document).ready(function () {
 
   swiperEl.initialize();
 
-  $(function() {
+  $(function () {
     $("#datepicker").datepicker({
       numberOfMonths: 2,
       showOtherMonths: true,
       selectOtherMonths: true,
       showButtonPanel: false,
       defaultDate: new Date(),
-      beforeShowDay: function(date) {
+      beforeShowDay: function (date) {
         var today = new Date();
         if (date.toDateString() === today.toDateString()) {
           return [true, 'ui-state-highlight', 'Today'];
@@ -54,5 +54,10 @@ $(document).ready(function () {
     });
   });
 
-  $('#myTable').DataTable();
+  $('#myTable').DataTable({
+    pageLength: 3,
+
+    // optional: change the dropdown choices
+    lengthMenu: [3, 6, 9, 12],
+  });
 });

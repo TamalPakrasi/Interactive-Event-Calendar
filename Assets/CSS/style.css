@@ -96,10 +96,10 @@ swiper-slide img {
   border: 0 !important;
 }
 
-.ui-state-hover {
+/* .ui-state-hover {
   background-color: transparent !important;
   border: 0 !important;
-}
+} */
 
 .ui-widget-header span {
   filter: invert(100%);
@@ -163,3 +163,12 @@ td button {
 .dt-paging {
  color: black !important;
 }
+
+/* active state calendar */
+.ui-state-active {
+  background: #f6f6f6 !important;
+  color: #454545 !important;
+  border-color: #c5c5c5 !important;
+}
+
+
