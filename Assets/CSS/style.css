@@ -36,3 +36,75 @@ textarea:focus {
   background-color: transparent !important;
 }
 
+swiper-slide img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Container styling */
+#datepicker {
+  display: flex;
+  gap: 1rem;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 1rem;
+}
+
+/* Ensure each month flexes equally and fills parent */
+#datepicker .ui-datepicker {
+  flex: 1;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+#datepicker .ui-datepicker-group {
+  flex: 1;
+}
+
+/* Override jQuery UI header to use Bootstrap primary */
+.ui-datepicker .ui-datepicker-header {
+  background-color: var(--bs-primary) !important;
+  color: #fff !important;
+  border: none;
+  border-radius: 0;
+  flex-shrink: 0;
+}
+
+/* Make calendar grid fill remaining height */
+.ui-datepicker .ui-datepicker-calendar {
+  flex: 1;
+  box-sizing: border-box;
+}
+
+/* Highlight today's date with warning color */
+.ui-state-highlight,
+.ui-datepicker .ui-datepicker-calendar .ui-state-highlight {
+  background-color: var(--bs-warning) !important;
+  border-color: var(--bs-gray-500) !important;
+  color: var(--bs-primary) !important;
+  /* Ensure readability on warning bg */
+}
+
+.ui-widget.ui-widget-content {
+  border: 0 !important;
+}
+
+.ui-state-hover {
+  background-color: transparent !important;
+  border: 0 !important;
+}
+
+.ui-widget-header span {
+  filter: invert(100%);
+}
+
+.ui-datepicker-month,
+.ui-datepicker-year {
+  color: white !important;
+}

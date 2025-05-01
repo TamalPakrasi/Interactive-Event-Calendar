@@ -21,7 +21,7 @@
 </head>
 
 <body>
-  <div id="root" class="bg-body-tertiary">
+  <div id="root" class="bg-body-secondary position-relative d-flex flex-column">
     <header>
       <nav class="navbar bg-white py-2">
         <div class="container d-flex justify-content-between align-items-center">
@@ -36,7 +36,7 @@
             <span class="text-primary fw-bold fst-italic fs-3">Event Calendar</span>
           </a>
           <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-            data-bs-target="#exampleModalCenteredScrollable">Add New2
+            data-bs-target="#exampleModalCenteredScrollable">Add New
             Event</button>
         </div>
       </nav>
@@ -71,6 +71,16 @@
         </nav>
       </section>
     </div>
+    <main class="position-relative my-3 flex-grow-1">
+      <div class="container h-100">
+        <swiper-container class="mySwiper h-100 w-100" init="false">
+          <swiper-slide class="text-center fs-5 bg-white d-flex justify-content-center align-items-center">
+            <div id="datepicker" class="mb-4"></div>
+          </swiper-slide>
+          <swiper-slide class="text-center fs-5 bg-white d-flex justify-content-center align-items-center">Slide 2</swiper-slide>
+        </swiper-container>
+      </div>
+    </main>
     <div class="modal fade" id="exampleModalCenteredScrollable" tabindex="-1"
       aria-labelledby="exampleModalCenteredScrollableTitle" style="display: none;" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
@@ -120,6 +130,7 @@
     </div>
   </div>
 
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-element-bundle.min.js"></script>
   <script src="./bootstrap-5.3.5-dist/js/bootstrap.bundle.min.js"></script>
   <script src="./Assets/JS/script.js"></script>
 </body>
