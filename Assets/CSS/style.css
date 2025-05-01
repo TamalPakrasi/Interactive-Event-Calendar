@@ -8,7 +8,8 @@
 }
 
 #root {
-  height: 100dvh;
+  min-height: 100dvh;
+  height: 100%;
 }
 
 header {
@@ -107,4 +108,58 @@ swiper-slide img {
 .ui-datepicker-month,
 .ui-datepicker-year {
   color: white !important;
+}
+
+.dt-length {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  font-size: 14px;
+}
+
+.dt-search {
+  font-size: 14px;
+}
+
+.dt-column-title {
+  font-size: 14px;
+}
+
+#myTable_info {
+  font-size: 14px;
+}
+
+.dt-empty {
+  font-size: 12px;
+}
+
+td {
+  font-size: 12px;
+  justify-content: baseline;
+  text-align: left !important;
+}
+
+td button {
+  width: 100%;
+  font-size: inherit !important;
+}
+
+.dt-paging-button {
+  font-size: 14px;
+  padding: 2px;
+}
+
+.swiper-wrapper {
+  background-color: white !important;
+}
+
+.current {
+  background-color: var(--bs-primary) !important;
+  border: 1px solid white !important;
+  color: white !important;
+}
+
+.dt-paging {
+ color: black !important;
 }
