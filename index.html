@@ -72,7 +72,7 @@
       </section>
     </div>
     <main class="position-relative my-3 flex-grow-1">
-      <div class="container h-100 bg-white">
+      <div class="container h-100 bg-white rounded-3">
         <swiper-container class="mySwiper h-100 w-100" init="false">
           <swiper-slide class="text-center fs-5 d-flex justify-content-center align-items-center pb-5">
             <div id="datepicker" class="mb-4"></div>
@@ -89,112 +89,6 @@
                   <th>View</th>
                 </tr>
               </thead>
-              <tbody>
-                <tr>
-                  <td>Hello</td>
-                  <td>02-05-2025</td>
-                  <td>12:00</td>
-                  <td>Work</td>
-                  <td>Office</td>
-                  <td><button class="btn btn-primary">View</button></td>
-                </tr>
-                <tr>
-                  <td>Meeting</td>
-                  <td>02-05-2025</td>
-                  <td>12:00</td>
-                  <td>Work</td>
-                  <td>Office</td>
-                  <td><button class="btn btn-primary">View</button></td>
-                </tr>
-                <tr>
-                  <td>Meeting</td>
-                  <td>02-05-2025</td>
-                  <td>12:00</td>
-                  <td>Work</td>
-                  <td>Office</td>
-                  <td><button class="btn btn-primary">View</button></td>
-                </tr>
-                <tr>
-                  <td>Meeting</td>
-                  <td>02-05-2025</td>
-                  <td>12:00</td>
-                  <td>Work</td>
-                  <td>Office</td>
-                  <td><button class="btn btn-primary">View</button></td>
-                </tr>
-                <tr>
-                  <td>Meeting</td>
-                  <td>02-05-2025</td>
-                  <td>12:00</td>
-                  <td>Work</td>
-                  <td>Office</td>
-                  <td><button class="btn btn-primary">View</button></td>
-                </tr>
-                <tr>
-                  <td>Meeting</td>
-                  <td>02-05-2025</td>
-                  <td>12:00</td>
-                  <td>Work</td>
-                  <td>Office</td>
-                  <td><button class="btn btn-primary">View</button></td>
-                </tr>
-                <tr>
-                  <td>Meeting</td>
-                  <td>02-05-2025</td>
-                  <td>12:00</td>
-                  <td>Work</td>
-                  <td>Office</td>
-                  <td><button class="btn btn-primary">View</button></td>
-                </tr>
-                <tr>
-                  <td>Meeting</td>
-                  <td>02-05-2025</td>
-                  <td>12:00</td>
-                  <td>Work</td>
-                  <td>Office</td>
-                  <td><button class="btn btn-primary">View</button></td>
-                </tr>
-                <tr>
-                  <td>Meeting</td>
-                  <td>02-05-2025</td>
-                  <td>12:00</td>
-                  <td>Work</td>
-                  <td>Office</td>
-                  <td><button class="btn btn-primary">View</button></td>
-                </tr>
-                <tr>
-                  <td>Meeting</td>
-                  <td>02-05-2025</td>
-                  <td>12:00</td>
-                  <td>Work</td>
-                  <td>Office</td>
-                  <td><button class="btn btn-primary">View</button></td>
-                </tr>
-                <tr>
-                  <td>Meeting</td>
-                  <td>02-05-2025</td>
-                  <td>12:00</td>
-                  <td>Work</td>
-                  <td>Office</td>
-                  <td><button class="btn btn-primary">View</button></td>
-                </tr>
-                <tr>
-                  <td>Meeting</td>
-                  <td>02-05-2025</td>
-                  <td>12:00</td>
-                  <td>Work</td>
-                  <td>Office</td>
-                  <td><button class="btn btn-primary">View</button></td>
-                </tr>
-                <tr>
-                  <td>Meeting</td>
-                  <td>02-05-2025</td>
-                  <td>12:00</td>
-                  <td>Work</td>
-                  <td>Office</td>
-                  <td><button class="btn btn-primary">View</button></td>
-                </tr>
-              </tbody>
             </table>
           </swiper-slide>
         </swiper-container>
@@ -241,7 +135,55 @@
             </div>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-primary me-2" id="save-event-data">Save</button>
+            <button type="button" class="btn btn-primary me-2" id="save-event-data" data-bs-dismiss="modal">Save</button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal fade" id="exampleModalCenteredScrollable2" tabindex="-1"
+      aria-labelledby="exampleModalCenteredScrollableTitle" style="display: none;" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5 fw-bold text-secondary" id="staticBackdropLabel">Add New Event</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body d-flex flex-column gap-4">
+            <div class="form-floating">
+              <input type="text" class="form-control" id="floatingText21" readonly>
+              <label for="floatingText21" class="text-secondary fw-bold">Title</label>
+            </div>
+            <div class="form-floating">
+              <input type="date" class="form-control" id="floatingDate3" readonly>
+              <label for="floatingDate3" class="text-secondary fw-bold">Date</label>
+            </div>
+            <div class="form-floating">
+              <input type="time" class="form-control" id="floatingTime4" readonly>
+              <label for="floatingTime4" class="text-secondary fw-bold">Time</label>
+            </div>
+            <div class="form-floating">
+              <select class="form-control form-select fs-6" aria-label="Default select example" id="floatingInput5" disabled>
+                <option selected>Select a Catagory</option>
+                <option value="1">Meeting</option>
+                <option value="2">Personal</option>
+                <option value="3">Work</option>
+                <option value="4">Holiday</option>
+              </select>
+              <label for="floatingInput5" class="text-secondary fw-bold">Category</label>
+            </div>
+            <div class="form-floating">
+              <input type="text" class="form-control" id="floatingText6" readonly>
+              <label for="floatingText6" class="text-secondary fw-bold">Location</label>
+            </div>
+            <div class="form-floating">
+              <textarea class="form-control" id="floatingTextarea5" style="height: 100px" readonly></textarea>
+              <label for="floatingTextarea5" class="text-secondary fw-bold">Description</label>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary me-2" id="save-event-data">Edit</button>
+            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Delete</button>
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
           </div>
         </div>
