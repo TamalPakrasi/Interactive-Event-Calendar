@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Interactive event Calendar</title>
+  <link rel="stylesheet" href="https://code.jquery.com/ui/1.14.1/themes/base/jquery-ui.css">
+  <link rel="stylesheet" href="./bootstrap-5.3.5-dist/css/bootstrap.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+    integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://code.jquery.com/ui/1.14.1/jquery-ui.js"></script>
+  <link href="https://cdn.datatables.net/v/dt/dt-2.3.0/datatables.min.css" rel="stylesheet"
+    integrity="sha384-b6zpX2e8uzvhWek1oBTKdifu88SXYijvZlp44itAjiEbD8ic6XRiVFQ9F6u4gspj" crossorigin="anonymous">
+
+  <script src="https://cdn.datatables.net/v/dt/dt-2.3.0/datatables.min.js"
+    integrity="sha384-AFcRPcI5tCh/IuCki8nD5IrM9bWey0NmCM+Gyq+zHDmYZq9QlZ418kOdfglyNTWt"
+    crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="./Assets/CSS/style.css">
+</head>
+
+<body>
+  <div id="root" class="bg-body-tertiary">
+    <header>
+      <nav class="navbar bg-white py-2">
+        <div class="container d-flex justify-content-between align-items-center">
+          <a class="navbar-brand d-flex justify-content-center align-items-center gap-2" href="#">
+            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="text-danger"
+              viewBox="0 0 16 16">
+              <path
+                d="M4 .5a.5.5 0 0 0-1 0V1H2a2 2 0 0 0-2 2v1h16V3a2 2 0 0 0-2-2h-1V.5a.5.5 0 0 0-1 0V1H4zm5.402 9.746c.625 0 1.184-.484 1.184-1.18 0-.832-.527-1.23-1.16-1.23-.586 0-1.168.387-1.168 1.21 0 .817.543 1.2 1.144 1.2" />
+              <path
+                d="M16 14V5H0v9a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2m-6.664-1.21c-1.11 0-1.656-.767-1.703-1.407h.683c.043.37.387.82 1.051.82.844 0 1.301-.848 1.305-2.164h-.027c-.153.414-.637.79-1.383.79-.852 0-1.676-.61-1.676-1.77 0-1.137.871-1.809 1.797-1.809 1.172 0 1.953.734 1.953 2.668 0 1.805-.742 2.871-2 2.871zm-2.89-5.435v5.332H5.77V8.079h-.012c-.29.156-.883.52-1.258.777V8.16a13 13 0 0 1 1.313-.805h.632z" />
+            </svg>
+            <span class="text-primary fw-bold fst-italic fs-3">Event Calendar</span>
+          </a>
+          <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+            data-bs-target="#exampleModalCenteredScrollable">Add New
+            Event</button>
+        </div>
+      </nav>
+    </header>
+    <div class="container">
+      <section id="lower-nav-sec" class="w-100 bg-white mt-4 py-2 px-1 rounded-2">
+        <nav class="navbar bg-body-tertiary">
+          <div class="container-fluid bg-transparent">
+            <div class="row mx-auto mx-lg-0 w-100 justify-content-center align-items-center">
+              <div class="col-12 col-lg mb-3 mb-lg-0">
+                <input class="form-control me-2" type="search" placeholder="Search events..." aria-label="Search">
+              </div>
+              <div class="col-12 col-sm-6 col-md-4 col-lg-2 mb-3 mb-sm-0">
+                <select class="form-select" aria-label="Default select example">
+                  <option selected>All Categories</option>
+                  <option value="1">Meeting</option>
+                  <option value="2">Personal</option>
+                  <option value="3">Work</option>
+                  <option value="4">Holiday</option>
+                </select>
+              </div>
+              <div class="col-12 col-sm-6 col-md-4 col-lg-2">
+                <select class="form-select" aria-label="Default select example">
+                  <option selected>All Days</option>
+                  <option value="1">Today</option>
+                  <option value="2">This Week</option>
+                  <option value="3">This Month</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </nav>
+      </section>
+    </div>
+    <div class="modal fade" id="exampleModalCenteredScrollable" tabindex="-1"
+      aria-labelledby="exampleModalCenteredScrollableTitle" style="display: none;" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5 fw-bold text-secondary" id="staticBackdropLabel">Add New Event</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body d-flex flex-column gap-4">
+            <div class="form-floating">
+              <input type="text" class="form-control" id="floatingText">
+              <label for="floatingText" class="text-secondary fw-bold">Title</label>
+            </div>
+            <div class="form-floating">
+              <input type="date" class="form-control" id="floatingDate">
+              <label for="floatingDate" class="text-secondary fw-bold">Date</label>
+            </div>
+            <div class="form-floating">
+              <input type="time" class="form-control" id="floatingTime">
+              <label for="floatingTime" class="text-secondary fw-bold">Time</label>
+            </div>
+            <div class="form-floating">
+              <select class="form-control form-select fs-6" aria-label="Default select example" id="floatingInput">
+                <option selected>Select a Catagory</option>
+                <option value="1">Meeting</option>
+                <option value="2">Personal</option>
+                <option value="3">Work</option>
+                <option value="4">Holiday</option>
+              </select>
+              <label for="floatingInput" class="text-secondary fw-bold">Category</label>
+            </div>
+            <div class="form-floating">
+              <input type="text" class="form-control" id="floatingText2">
+              <label for="floatingText2" class="text-secondary fw-bold">Location</label>
+            </div>
+            <div class="form-floating">
+              <textarea class="form-control" id="floatingTextarea2" style="height: 100px"></textarea>
+              <label for="floatingTextarea2" class="text-secondary fw-bold">Description</label>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary me-2" id="save-event-data">Save</button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="./bootstrap-5.3.5-dist/js/bootstrap.bundle.min.js"></script>
+  <script src="./Assets/JS/script.js"></script>
+</body>
+
+</html>
