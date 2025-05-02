@@ -37,9 +37,12 @@ $(document).ready(function () {
 
   swiperEl.initialize();
 
+
+
+
   let date = "";
   $("#datepicker").datepicker({
-    numberOfMonths: 2,
+    numberOfMonths: 1,
     showOtherMonths: true,
     selectOtherMonths: true,
     showButtonPanel: false,
@@ -50,25 +53,18 @@ $(document).ready(function () {
         const [month, day, year] = dateArray;
         date = `${year}-${month}-${day}`;
       }
-      $('.form-floating').find('input').val("");
       $('#floatingDate').val(date);
-
     },
     onUpdateDatepicker: function (inst) {
-      inst.dpDiv.find('.ui-datepicker-calendar a').attr('data-bs-toggle', 'modal').attr('data-bs-target', "#exampleModalCenteredScrollable");
-      $('[data-bs-toggle="modal"]').click(function () { 
-        if ($(this).hasClass('ui-state-default')) {
-         console.log(this);
-        }
-      });
+      // inst.dpDiv.find('.ui-datepicker-calendar a').attr('data-bs-toggle', 'modal').attr('data-bs-target', "#exampleModalCenteredScrollable");
     },
-    // beforeShowDay: function (date) {
-    //   const today = new Date();
-    //   if (date.toDateString() === today.toDateString()) {
-    //     return [true, 'ui-state-highlight', 'Today'];
-    //   }
-    //   return [true, ''];
-    // },
+    beforeShowDay: function (date) {
+      var today = new Date();
+      if (date.toDateString() === today.toDateString()) {
+        return [true, 'ui-state-highlight', 'Today'];
+      }
+      return [true, ''];
+    }
   });
 
   $('#myTable').DataTable({
@@ -82,7 +78,7 @@ $(document).ready(function () {
     dateArray = modalBody.find('#floatingDate').val().split('-');
     if (dateArray) {
       const [year, month, day] = dateArray;
-      return `${month}/${day}/${year}`;
+      return `${year}-${month}-${day}`;
     }
   }
 
@@ -111,9 +107,34 @@ $(document).ready(function () {
     } else return null;
   }
 
-  const $datepicker = $('#datepicker');
+  function targetDateInCalendar(theDate) {
+    const allDateBoxes = $('#datepicker').find('.ui-datepicker td[data-handler="selectDay"] a');
 
-  $('#save-event-data').click(function () {
+    const filteredBoxes = allDateBoxes.filter(function () {
+      return !$(this).hasClass('ui-priority-secondary')
+    })
+
+    $.each(filteredBoxes, function (index, dataBox) {
+      const td = dataBox.closest('td');
+      const day = parseInt($(dataBox).text());
+      const month = parseInt($(td).attr('data-month'));
+      const year = parseInt($(td).attr('data-year'));
+
+      const d = new Date(year, month, day);
+
+      const yyyy = d.getFullYear().toString();
+      const mm = String(d.getMonth() + 1).padStart(2, '0');
+      const dd = String(d.getDate()).padStart(2, '0');
+
+      const date = `${yyyy}-${mm}-${dd}`;
+      if (date === theDate) {
+        console.log(dataBox);
+        $(dataBox).addClass('has-event-class');
+      }
+    });
+  }
+
+  function handler() {
     const modalBody = $(this).parent().prev();
     const title = modalBody.find('#floatingText').val();
     const theDate = formatDate(modalBody);
@@ -121,5 +142,10 @@ $(document).ready(function () {
     const catagory = getCatagory(modalBody);
     const location = modalBody.find('#floatingText2').val();
     const description = modalBody.find('#floatingTextarea2').val();
-  })
+
+    $('#datepicker').find('.ui-datepicker td[data-handler="selectDay"] a').removeClass('ui-state-active');
+    targetDateInCalendar(theDate);
+  }
+
+  $('#save-event-data').click(handler)
 });
