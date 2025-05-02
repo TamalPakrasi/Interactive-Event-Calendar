@@ -105,7 +105,7 @@ swiper-slide img {
   border: 0 !important;
 } */
 
-.ui-icon{
+.ui-icon {
   filter: invert(100%);
 }
 
@@ -183,4 +183,9 @@ td button {
 #exampleModalCenteredScrollable2 input,
 #exampleModalCenteredScrollable2 textarea {
   border: 0 !important;
+}
+
+.highlight {
+  background-color: rgba(0, 68, 255, 0.61) !important;
+  color: white !important;
 }

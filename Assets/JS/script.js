@@ -37,29 +37,39 @@ $(document).ready(function () {
 
   swiperEl.initialize();
 
-  $(function () {
-    $("#datepicker").datepicker({
-      numberOfMonths: 2,
-      showOtherMonths: true,
-      selectOtherMonths: true,
-      showButtonPanel: false,
-      defaultDate: new Date(),
-      beforeShowDay: function (date) {
-        var today = new Date();
-        if (date.toDateString() === today.toDateString()) {
-          return [true, 'ui-state-highlight', 'Today'];
-        }
-        return [true, ''];
-      },
-      onSelect: function (dateText, inst) {
-        const date = dateText;
-        $('#floatingDate').val(dateText);
+  let date = "";
+  $("#datepicker").datepicker({
+    numberOfMonths: 2,
+    showOtherMonths: true,
+    selectOtherMonths: true,
+    showButtonPanel: false,
+    defaultDate: new Date(),
+    onSelect: function (dateText, inst) {
+      const dateArray = dateText.split('/');
+      if (dateArray) {
+        const [month, day, year] = dateArray;
+        date = `${year}-${month}-${day}`;
       }
-    });
-    // $('.ui-datepicker-calendar').find('a').attr('data-bs-toggle', 'modal');
-    // $('.ui-datepicker-calendar').find('a').attr('data-bs-target', "#exampleModalCenteredScrollable");
-  }
-  );
+      $('.form-floating').find('input').val("");
+      $('#floatingDate').val(date);
+
+    },
+    onUpdateDatepicker: function (inst) {
+      inst.dpDiv.find('.ui-datepicker-calendar a').attr('data-bs-toggle', 'modal').attr('data-bs-target', "#exampleModalCenteredScrollable");
+      $('[data-bs-toggle="modal"]').click(function () { 
+        if ($(this).hasClass('ui-state-default')) {
+         console.log(this);
+        }
+      });
+    },
+    // beforeShowDay: function (date) {
+    //   const today = new Date();
+    //   if (date.toDateString() === today.toDateString()) {
+    //     return [true, 'ui-state-highlight', 'Today'];
+    //   }
+    //   return [true, ''];
+    // },
+  });
 
   $('#myTable').DataTable({
     pageLength: 3,
@@ -69,10 +79,10 @@ $(document).ready(function () {
   });
 
   function formatDate(modalBody) {
-    const dateArray = modalBody.find('#floatingDate').val().split('-');
+    dateArray = modalBody.find('#floatingDate').val().split('-');
     if (dateArray) {
       const [year, month, day] = dateArray;
-      return `${day}-${month}-${year}`;
+      return `${month}/${day}/${year}`;
     }
   }
 
@@ -101,13 +111,15 @@ $(document).ready(function () {
     } else return null;
   }
 
+  const $datepicker = $('#datepicker');
+
   $('#save-event-data').click(function () {
     const modalBody = $(this).parent().prev();
     const title = modalBody.find('#floatingText').val();
-    const date = formatDate(modalBody);
+    const theDate = formatDate(modalBody);
     const time = formatTime(modalBody);
     const catagory = getCatagory(modalBody);
     const location = modalBody.find('#floatingText2').val();
     const description = modalBody.find('#floatingTextarea2').val();
-  });
+  })
 });
