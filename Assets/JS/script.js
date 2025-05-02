@@ -1,4 +1,5 @@
 $(document).ready(function () {
+  const descArr = [];
   const swiperEl = document.querySelector('swiper-container')
 
   const params = {
@@ -73,11 +74,15 @@ $(document).ready(function () {
     }
   });
 
-  $('#myTable').DataTable({
+  var table = $('#myTable').DataTable({
     pageLength: 3,
 
     // optional: change the dropdown choices
     lengthMenu: [3, 6, 9, 12],
+
+    paging: true,
+    searching: true,
+
   });
 
   function formatDate(modalBody) {
@@ -103,6 +108,19 @@ $(document).ready(function () {
       }
 
       return `${String(hours).padStart(2, '0')}:${String(mins).padStart(2, '0')} AM`
+    }
+  }
+
+  function bgCol(catagory) {
+    switch (catagory) {
+      case 'Meeting':
+        return 'bg-primary'
+      case 'Work':
+        return 'bg-danger'
+      case 'Personal':
+        return 'bg-purple'
+      case 'Holiday':
+        return 'bg-success'
     }
   }
 
@@ -140,17 +158,85 @@ $(document).ready(function () {
     });
   }
 
+  function updateModal(arr) {
+    $('#floatingText21').val(arr[0]);
+    $('#floatingDate3').val(arr[1]);
+    $('#floatingTime4').val(arr[2]);
+    $('#floatingInput5').val(arr[3]);
+    $('#floatingText6').val(arr[4]);
+    $('#floatingTextarea5').val(arr[5]);
+  }
+
+  function getRespectiveDesc(e, selectedTr) {
+    e.stopImmediatePropagation();
+    let description = "";
+    const childrenArray = Array.from($('#myTable tbody').children());
+    const trIndex = childrenArray.indexOf(selectedTr[0]);
+
+    $.each(descArr, function (index, desc) {
+      if (index === trIndex) {
+        description = desc;
+      }
+    });
+
+    return description;
+  }
+
+  function viewData(viewButton, e) {
+    const prevsiblings = $(viewButton).parent().prevAll();
+    const title = prevsiblings.eq(4).text();
+    const date = prevsiblings.eq(3).text();
+    const time = prevsiblings.eq(2).text();
+    const catagory = prevsiblings.eq(1).find('div').text();
+    const location = prevsiblings.eq(0).text();
+    const description = getRespectiveDesc(e, $(viewButton).parents().eq(1));
+    const arr = [title, date, time, catagory, location, description];
+
+    $('#exampleModalCenteredScrollable2 .form-control').val('');
+    updateModal([...arr]);
+
+    $('#delete-row-button').click(function () {
+
+    })
+  }
+
+  function tableFunc(arr) {
+    const viewButton = `<button class="btn btn-primary" data-bs-toggle="modal"
+            data-bs-target="#exampleModalCenteredScrollable2">View</button>`;
+
+    const description = arr.pop();
+    descArr.push(description);
+
+    const str = JSON.stringify(arr)
+    const newArr = JSON.parse(str);
+    newArr.push(viewButton);
+
+    const newNode = table.row.add(newArr).draw(false).node();
+
+    $('#myTable tbody').append(newNode);
+
+    $('#exampleModalCenteredScrollable .form-control, #exampleModalCenteredScrollable .form-select')
+      .val('')
+      .find('option:first').prop('selected', true);
+
+    $('#myTable .btn').click(function (e) {
+      viewData(this, e);
+    });
+  }
+
   function handler() {
     const modalBody = $(this).parent().prev();
-    const title = modalBody.find('#floatingText').val();
+    const title = modalBody.find('#floatingText').val().trim();
     const theDate = formatDate(modalBody);
     const time = formatTime(modalBody);
     const catagory = getCatagory(modalBody);
-    const location = modalBody.find('#floatingText2').val();
-    const description = modalBody.find('#floatingTextarea2').val();
+    const desinedCatagory = `<div class="text-white badge ${bgCol(catagory)}" style="font-size:14px">${catagory}</div>`
+    const location = modalBody.find('#floatingText2').val().trim();
+    const description = modalBody.find('#floatingTextarea2').val().trim();
 
-    $('#datepicker').find('.ui-datepicker td[data-handler="selectDay"] a').removeClass('ui-state-active');
     targetDateInCalendar(theDate);
+    const eveArr = [title, theDate, time, desinedCatagory, location, description]
+    tableFunc([...eveArr]);
   }
 
   $('#save-event-data').click(handler)

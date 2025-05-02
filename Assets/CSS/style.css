@@ -132,8 +132,14 @@ swiper-slide img {
   font-size: 12px;
 }
 
+#myTable th {
+  text-align: left !important;
+}
+
 td {
-  font-size: 12px;
+  color: var(--var-gray-500);
+  font-size: 14px;
+  font-weight: 550;
   justify-content: baseline;
   text-align: left !important;
 }
@@ -197,3 +203,8 @@ td button {
   height: 10px;
   background-color: blue;
 }
+
+.bg-purple {
+  background-color: purple !important;
+}
+

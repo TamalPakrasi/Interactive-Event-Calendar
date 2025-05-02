@@ -89,6 +89,7 @@
                   <th>View</th>
                 </tr>
               </thead>
+              <tbody></tbody>
             </table>
           </swiper-slide>
         </swiper-container>
@@ -135,7 +136,7 @@
             </div>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-primary me-2" id="save-event-data" data-bs-dismiss="modal">Save</button>
+            <button type="submit" class="btn btn-primary me-2" id="save-event-data" data-bs-dismiss="modal">Save</button>
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
           </div>
         </div>
@@ -159,17 +160,11 @@
               <label for="floatingDate3" class="text-secondary fw-bold">Date</label>
             </div>
             <div class="form-floating">
-              <input type="time" class="form-control" id="floatingTime4" readonly>
+              <input type="text" class="form-control" id="floatingTime4" readonly>
               <label for="floatingTime4" class="text-secondary fw-bold">Time</label>
             </div>
             <div class="form-floating">
-              <select class="form-control form-select fs-6" aria-label="Default select example" id="floatingInput5" disabled>
-                <option selected>Select a Catagory</option>
-                <option value="1">Meeting</option>
-                <option value="2">Personal</option>
-                <option value="3">Work</option>
-                <option value="4">Holiday</option>
-              </select>
+              <input type="text" class="form-control" id="floatingInput5" readonly>
               <label for="floatingInput5" class="text-secondary fw-bold">Category</label>
             </div>
             <div class="form-floating">
@@ -183,7 +178,7 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-primary me-2" id="edit-event-data">Edit</button>
-            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Delete</button>
+            <button type="button" class="btn btn-danger" data-bs-dismiss="modal" id="delete-row-button">Delete</button>
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
           </div>
         </div>
