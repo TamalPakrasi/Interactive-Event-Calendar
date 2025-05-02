@@ -54,11 +54,17 @@ $(document).ready(function () {
         date = `${year}-${month}-${day}`;
       }
       $('#floatingDate').val(date);
+      setTimeout(function () {
+        $(".ui-datepicker td a.ui-state-active").removeClass("ui-state-active");
+      }, 0);
     },
     onUpdateDatepicker: function (inst) {
       // inst.dpDiv.find('.ui-datepicker-calendar a').attr('data-bs-toggle', 'modal').attr('data-bs-target', "#exampleModalCenteredScrollable");
     },
     beforeShowDay: function (date) {
+      setTimeout(function () {
+        $(".ui-datepicker td a.ui-state-active").removeClass("ui-state-active");
+      }, 0);
       var today = new Date();
       if (date.toDateString() === today.toDateString()) {
         return [true, 'ui-state-highlight', 'Today'];
