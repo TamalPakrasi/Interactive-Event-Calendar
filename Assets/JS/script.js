@@ -230,9 +230,18 @@ $(document).ready(function () {
     const theDate = formatDate(modalBody);
     const time = formatTime(modalBody);
     const catagory = getCatagory(modalBody);
-    const desinedCatagory = `<div class="text-white badge ${bgCol(catagory)}" style="font-size:14px">${catagory}</div>`
     const location = modalBody.find('#floatingText2').val().trim();
     const description = modalBody.find('#floatingTextarea2').val().trim();
+
+    if (!title || !theDate || !time || !catagory || !location) {
+      alert("FILL UP FIRST 5 FIELDS!!!");
+      $('#exampleModalCenteredScrollable .form-control, #exampleModalCenteredScrollable .form-select')
+      .val('')
+      .find('option:first').prop('selected', true);
+      return;
+    }
+    
+    const desinedCatagory = `<div class="text-white badge ${bgCol(catagory)}" style="font-size:14px">${catagory}</div>`
 
     targetDateInCalendar(theDate);
     const eveArr = [title, theDate, time, desinedCatagory, location, description]
