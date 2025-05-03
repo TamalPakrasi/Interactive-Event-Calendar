@@ -208,3 +208,7 @@ td button {
   background-color: purple !important;
 }
 
+.dt-info {
+  display: none !important;
+}
+

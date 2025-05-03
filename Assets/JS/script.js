@@ -1,5 +1,5 @@
 $(document).ready(function () {
-  const descArr = [];
+  // const descArr = [];
   const swiperEl = document.querySelector('swiper-container')
 
   const params = {
@@ -85,6 +85,18 @@ $(document).ready(function () {
 
   });
 
+  const datas = getFromStorage('event-data-list');
+  $.each(datas, function (indexInArray, data) {
+    const newNode = table.row.add(data).draw(false).node();
+
+    $('#myTable tbody').append(newNode);
+  });
+
+  $('#myTable .btn').click(function (e) {
+    e.stopImmediatePropagation()
+    viewData(this, e);
+  });
+
   function formatDate(modalBody) {
     dateArray = modalBody.find('#floatingDate').val().split('-');
     if (dateArray) {
@@ -158,20 +170,32 @@ $(document).ready(function () {
     });
   }
 
-  function updateModal(arr) {
+  function updateModal(arr, id) {
     $('#floatingText21').val(arr[0]);
     $('#floatingDate3').val(arr[1]);
     $('#floatingTime4').val(arr[2]);
     $('#floatingInput5').val(arr[3]);
     $('#floatingText6').val(arr[4]);
     $('#floatingTextarea5').val(arr[5]);
+
+    if (document.getElementById('delete-row-button').hasAttribute('row-index')) {
+      $('#delete-row-button').attr('row-index', "");
+    }
+
+    $('#delete-row-button').attr('row-index', id);
+  }
+
+  function tableRowIndex(selectedTr) {
+    const childrenArray = Array.from($('#myTable tbody').children());
+    return childrenArray.indexOf(selectedTr[0]);
   }
 
   function getRespectiveDesc(e, selectedTr) {
     e.stopImmediatePropagation();
     let description = "";
-    const childrenArray = Array.from($('#myTable tbody').children());
-    const trIndex = childrenArray.indexOf(selectedTr[0]);
+
+    const trIndex = tableRowIndex(selectedTr);
+    const descArr = getFromStorage('description-data-list');
 
     $.each(descArr, function (index, desc) {
       if (index === trIndex) {
@@ -182,6 +206,17 @@ $(document).ready(function () {
     return description;
   }
 
+  function getFromStorage(data_name) {
+    return JSON.parse(localStorage.getItem(data_name) ?? '[]');
+  }
+
+  function addToLocalStorage(eventData, name) {
+    const arr = getFromStorage(name);
+    arr.push(eventData)
+    localStorage.setItem(name, JSON.stringify(arr));
+  }
+  var currentRow;
+
   function viewData(viewButton, e) {
     const prevsiblings = $(viewButton).parent().prevAll();
     const title = prevsiblings.eq(4).text();
@@ -191,35 +226,69 @@ $(document).ready(function () {
     const location = prevsiblings.eq(0).text();
     const description = getRespectiveDesc(e, $(viewButton).parents().eq(1));
     const arr = [title, date, time, catagory, location, description];
+    const id = viewButton.id;
+    currentRow = table.row($(this).closest('tr'));
 
     $('#exampleModalCenteredScrollable2 .form-control').val('');
-    updateModal([...arr]);
+    updateModal([...arr], id);
 
-    $('#delete-row-button').click(function () {
+    // $('#delete-row-button').click(function (e) {
+    //   e.stopImmediatePropagation();
+    //   const index = Number($(this).attr('row-index'));
 
-    })
+    //   const trIndex = tableRowIndex($(`#${index}`).parents().eq(1));
+
+    //   const datas = getFromStorage('event-data-list');
+    //   datas.splice(trIndex, 1);
+
+    //   const descs = getFromStorage('description-data-list');
+    //   descs.splice(trIndex, 1);
+
+    //   localStorage.setItem('event-data-list', JSON.stringify(datas));
+    //   localStorage.setItem('description-data-list', JSON.stringify(descs));
+
+    //   // $('#myTable tbody').remove();
+    //   // const tbody = document.createElement('tbody');
+
+    //   // $('#myTable').append(tbody);
+
+    //   table.row().remove();
+    //   tableFunc();
+    // });
   }
 
-  function tableFunc(arr) {
-    const viewButton = `<button class="btn btn-primary" data-bs-toggle="modal"
-            data-bs-target="#exampleModalCenteredScrollable2">View</button>`;
+  function tableFunc() {
+    const data = getFromStorage('event-data-list');
 
-    const description = arr.pop();
-    descArr.push(description);
-
-    const str = JSON.stringify(arr)
-    const newArr = JSON.parse(str);
-    newArr.push(viewButton);
-
-    const newNode = table.row.add(newArr).draw(false).node();
+    const newNode = table.row.add(data.at(data.length - 1)).draw(false).node();
 
     $('#myTable tbody').append(newNode);
+
 
     $('#exampleModalCenteredScrollable .form-control, #exampleModalCenteredScrollable .form-select')
       .val('')
       .find('option:first').prop('selected', true);
+  }
+
+  function arrangeData(arr) {
+    const description = arr.pop();
+    addToLocalStorage(description, 'description-data-list')
+
+    const str = JSON.stringify(arr)
+    const newArr = JSON.parse(str);
+
+    const idvalue = getFromStorage('event-data-list').length;
+    const viewButton = `<button class="btn btn-primary" id="${idvalue}" data-bs-toggle="modal"
+            data-bs-target="#exampleModalCenteredScrollable2">View</button>`;
+
+    newArr.push(viewButton);
+
+    addToLocalStorage([...newArr], 'event-data-list');
+
+    tableFunc();
 
     $('#myTable .btn').click(function (e) {
+      e.stopImmediatePropagation();
       viewData(this, e);
     });
   }
@@ -236,16 +305,16 @@ $(document).ready(function () {
     if (!title || !theDate || !time || !catagory || !location) {
       alert("FILL UP FIRST 5 FIELDS!!!");
       $('#exampleModalCenteredScrollable .form-control, #exampleModalCenteredScrollable .form-select')
-      .val('')
-      .find('option:first').prop('selected', true);
+        .val('')
+        .find('option:first').prop('selected', true);
       return;
     }
-    
+
     const desinedCatagory = `<div class="text-white badge ${bgCol(catagory)}" style="font-size:14px">${catagory}</div>`
 
     targetDateInCalendar(theDate);
     const eveArr = [title, theDate, time, desinedCatagory, location, description]
-    tableFunc([...eveArr]);
+    arrangeData([...eveArr]);
   }
 
   $('#save-event-data').click(handler)
