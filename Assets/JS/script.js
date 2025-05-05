@@ -215,9 +215,11 @@ $(document).ready(function () {
     arr.push(eventData)
     localStorage.setItem(name, JSON.stringify(arr));
   }
-  var currentRow;
 
   function viewData(viewButton, e) {
+    var tr = $(viewButton).closest('tr');
+    var row = table.row(tr);
+
     const prevsiblings = $(viewButton).parent().prevAll();
     const title = prevsiblings.eq(4).text();
     const date = prevsiblings.eq(3).text();
@@ -227,34 +229,36 @@ $(document).ready(function () {
     const description = getRespectiveDesc(e, $(viewButton).parents().eq(1));
     const arr = [title, date, time, catagory, location, description];
     const id = viewButton.id;
-    currentRow = table.row($(this).closest('tr'));
 
     $('#exampleModalCenteredScrollable2 .form-control').val('');
     updateModal([...arr], id);
 
-    // $('#delete-row-button').click(function (e) {
-    //   e.stopImmediatePropagation();
-    //   const index = Number($(this).attr('row-index'));
+    $('#exampleModalCenteredScrollable2').data('row', row);
 
-    //   const trIndex = tableRowIndex($(`#${index}`).parents().eq(1));
+    $('#delete-row-button').click(function (e) {
+      var row = $(this).parents().eq(3).data('row');
 
-    //   const datas = getFromStorage('event-data-list');
-    //   datas.splice(trIndex, 1);
+      e.preventDefault();
+      e.stopImmediatePropagation();
+      const index = Number($(this).attr('row-index'));
 
-    //   const descs = getFromStorage('description-data-list');
-    //   descs.splice(trIndex, 1);
+      const trIndex = tableRowIndex($(`#${index}`).parents().eq(1));
 
-    //   localStorage.setItem('event-data-list', JSON.stringify(datas));
-    //   localStorage.setItem('description-data-list', JSON.stringify(descs));
+      const datas = getFromStorage('event-data-list');
+      datas.splice(trIndex, 1);
 
-    //   // $('#myTable tbody').remove();
-    //   // const tbody = document.createElement('tbody');
+      const descs = getFromStorage('description-data-list');
+      descs.splice(trIndex, 1);
 
-    //   // $('#myTable').append(tbody);
+      localStorage.setItem('event-data-list', JSON.stringify(datas));
+      localStorage.setItem('description-data-list', JSON.stringify(descs));
 
-    //   table.row().remove();
-    //   tableFunc();
-    // });
+      if (datas.length === 0 && descs.length === 0) {
+        localStorage.clear();
+      }
+
+      row.remove().draw(false);
+    });
   }
 
   function tableFunc() {
